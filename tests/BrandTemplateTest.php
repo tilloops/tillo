@@ -1,9 +1,8 @@
 <?php
 
-
 use RewardCloud\Api\BrandTemplate;
 
-class BrandTemplateTest extends TestCase
+class BrandTemplateTest extends TilloTestCase
 {
 
     /**
@@ -25,7 +24,7 @@ class BrandTemplateTest extends TestCase
         ];
 
         $this->template->request($params);
-        $response        = $this->template->getResponse();
+        $response = $this->template->getResponse();
         $responseHeaders = $response->getHeaders();
 
         $this->assertEquals(200, $response->getStatusCode());

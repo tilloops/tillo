@@ -2,7 +2,7 @@
 
 use RewardCloud\Api\DigitalCode;
 
-class DigitalCodeTest extends TestCase
+class DigitalCodeTest extends TilloTestCase
 {
     /**
      * @var DigitalCode
@@ -24,28 +24,28 @@ class DigitalCodeTest extends TestCase
     protected function issueCode($requestId, $params = [])
     {
         $params = array_merge([
-            'brand'                 => 'amazon',
-            'client_request_id'     => $requestId,
-            'delivery_method'       => 'code',
-            'face_value'            => [
-                'amount'   => 50.00,
+            'brand' => 'amazon',
+            'client_request_id' => $requestId,
+            'delivery_method' => 'code',
+            'face_value' => [
+                'amount' => 50.00,
                 'currency' => 'GBP',
             ],
-            'fulfilment_by'         => 'rewardcloud',
+            'fulfilment_by' => 'rewardcloud',
             'fulfilment_parameters' => [
                 'from_email' => 'email@reward.cloud',
-                'from_name'  => 'RewardCloud',
-                'subject'    => 'Your Gift Card',
-                'to_email'   => 'gift@reward.cloud',
-                'to_name'    => 'Reward Cloud',
-            ],
-            'personalisation'       => [
                 'from_name' => 'RewardCloud',
-                'message'   => 'Here is your gift card',
-                'template'  => 'standard',
-                'to_name'   => 'Reward Cloud',
+                'subject' => 'Your Gift Card',
+                'to_email' => 'gift@reward.cloud',
+                'to_name' => 'Reward Cloud',
             ],
-            'sector'                => 'voluntary-benefits',
+            'personalisation' => [
+                'from_name' => 'RewardCloud',
+                'message' => 'Here is your gift card',
+                'template' => 'standard',
+                'to_name' => 'Reward Cloud',
+            ],
+            'sector' => 'voluntary-benefits',
         ], $params);
 
         return $this->digitalCode->issue($params);
@@ -73,10 +73,10 @@ class DigitalCodeTest extends TestCase
     public function testReverse()
     {
         $issueRequestId = time();
-        $codeResponse   = $this->issueCode($issueRequestId, [
-            'brand'      => 'tesco',
+        $codeResponse = $this->issueCode($issueRequestId, [
+            'brand' => 'tesco',
             'face_value' => [
-                'amount'   => 40.00,
+                'amount' => 40.00,
                 'currency' => 'GBP',
             ],
         ]);
@@ -84,16 +84,15 @@ class DigitalCodeTest extends TestCase
         $this->assertArrayNotHasKey('error', $codeResponse, $codeResponse['error']['message'] ?? '');
 
         $params = [
-            'client_request_id'          => time(),
+            'client_request_id' => time(),
             'original_client_request_id' => $issueRequestId,
-            'brand'                      => 'tesco',
-            'face_value'                 => [
-                'amount'   => '40',
+            'brand' => 'tesco',
+            'face_value' => [
+                'amount' => '40',
                 'currency' => 'GBP',
             ],
-            'sector'                     => 'voluntary-benefits',
+            'sector' => 'voluntary-benefits',
         ];
-
 
         $response = $this->digitalCode->reverse($params);
 
@@ -108,10 +107,10 @@ class DigitalCodeTest extends TestCase
     public function testCancel()
     {
         $codeRequestId = time();
-        $codeResponse  = $this->issueCode($codeRequestId, [
-            'brand'      => 'amazon',
+        $codeResponse = $this->issueCode($codeRequestId, [
+            'brand' => 'amazon',
             'face_value' => [
-                'amount'   => 35.00,
+                'amount' => 35.00,
                 'currency' => 'GBP',
             ],
         ]);
@@ -124,15 +123,15 @@ class DigitalCodeTest extends TestCase
         $issueCode = $codeResponse['data']['code'];
 
         $params = [
-            'client_request_id'          => time(),
+            'client_request_id' => time(),
             'original_client_request_id' => $codeRequestId,
-            'brand'                      => 'amazon',
-            'face_value'                 => [
-                'amount'   => 35,
+            'brand' => 'amazon',
+            'face_value' => [
+                'amount' => 35,
                 'currency' => 'GBP',
             ],
-            'code'                       => $issueCode,
-            'sector'                     => 'voluntary-benefits',
+            'code' => $issueCode,
+            'sector' => 'voluntary-benefits',
 //            'tags'                       => ['premium', 'lifetime'],
         ];
 
@@ -150,10 +149,10 @@ class DigitalCodeTest extends TestCase
     {
 
         $codeRequestId = time();
-        $codeResponse  = $this->issueCode($codeRequestId, [
-            'brand'      => 'tesco',
+        $codeResponse = $this->issueCode($codeRequestId, [
+            'brand' => 'tesco',
             'face_value' => [
-                'amount'   => 35.00,
+                'amount' => 35.00,
                 'currency' => 'GBP',
             ],
         ]);
@@ -163,10 +162,10 @@ class DigitalCodeTest extends TestCase
         $this->assertEquals('success', $codeResponse['status']);
 
         $params = [
-            'client_request_id'          => time(),
+            'client_request_id' => time(),
             'original_client_request_id' => $codeRequestId,
-            'brand'                      => 'tesco',
-            'sector'                     => 'voluntary-benefits',
+            'brand' => 'tesco',
+            'sector' => 'voluntary-benefits',
 //            'tags'                       => ['premium', 'lifetime'],
         ];
 
@@ -183,10 +182,10 @@ class DigitalCodeTest extends TestCase
     public function testCheckBalance()
     {
         $codeRequestId = time();
-        $codeResponse  = $this->issueCode($codeRequestId, [
-            'brand'      => 'tesco',
+        $codeResponse = $this->issueCode($codeRequestId, [
+            'brand' => 'tesco',
             'face_value' => [
-                'amount'   => 35.00,
+                'amount' => 35.00,
                 'currency' => 'GBP',
             ],
         ]);
@@ -200,13 +199,13 @@ class DigitalCodeTest extends TestCase
 
         $params = [
             'client_request_id' => time(),
-            'brand'             => 'tesco',
-            'face_value'        => [
+            'brand' => 'tesco',
+            'face_value' => [
                 'currency' => 'GBP',
             ],
-            'code'              => $codeData['code'],
-            'pin'               => $codeData['pin'],
-            'sector'            => 'voluntary-benefits',
+            'code' => $codeData['code'],
+            'pin' => $codeData['pin'],
+            'sector' => 'voluntary-benefits',
         ];
 
         $response = $this->digitalCode->checkBalance($params);
@@ -237,6 +236,5 @@ class DigitalCodeTest extends TestCase
         $this->assertEquals('success', $response['status']);
         $this->assertEquals('Stock levels for [m-and-s]', $response['message']);
     }
-
 
 }

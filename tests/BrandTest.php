@@ -1,9 +1,8 @@
 <?php
 
-
 use RewardCloud\Api\Brand;
 
-class BrandTest extends TestCase
+class BrandTest extends TilloTestCase
 {
 
     /**
@@ -18,11 +17,10 @@ class BrandTest extends TestCase
         $this->brand = $this->client->brand;
     }
 
-
     public function testList()
     {
         $params = [
-            'brand'  => 'amazon',
+            'brand' => 'amazon',
             'detail' => 'true',
         ];
 
