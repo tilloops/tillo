@@ -1,0 +1,34 @@
+{
+  "name": "tilloops/tillo",
+  "description": "Tillo Api client V2",
+  "type": "library",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Felippe Ladeira",
+      "email": "felippe@reward.cloud"
+    }
+  ],
+  "version": "3.0.0",
+  "require": {
+    "php": ">=7.1",
+    "ext-json": "*",
+    "guzzlehttp/guzzle": "^6.2"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^8.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "RewardCloud\\": "src/"
+    },
+    "files": [
+      "tests/TilloTestCase.php"
+    ]
+  },
+  "scripts": {
+    "test": "./vendor/bin/phpunit",
+    "testWin": "vendor\\bin\\phpunit.bat --testdox"
+  },
+  "minimum-stability": "stable"
+}
