@@ -198,7 +198,6 @@ class HttpClient
 
             $response = json_decode($this->lastResponse->getBody()->getContents(), true);
         } catch (GuzzleException $e) {
-            var_dump($e);
             $response = $e->getMessage();
         }
 
